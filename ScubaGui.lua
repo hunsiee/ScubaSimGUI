@@ -5,7 +5,7 @@
 
 local ScubaGUI = Instance.new("ScreenGui")
 local Main = Instance.new("Frame")
-local TextLabel = Instance.new("TextLabel")
+local Title = Instance.new("TextLabel")
 local Coins = Instance.new("TextButton")
 local Tools = Instance.new("TextButton")
 local Gold = Instance.new("TextButton")
@@ -13,6 +13,7 @@ local CoinBox = Instance.new("TextBox")
 local GoldBox = Instance.new("TextBox")
 local Hide = Instance.new("TextButton")
 local Credits = Instance.new("TextLabel")
+local out = Instance.new("TextBox")
 local OpenGUI = Instance.new("Frame")
 local Open = Instance.new("TextButton")
 
@@ -31,17 +32,18 @@ Main.Selectable = true
 Main.Size = UDim2.new(0, 542, 0, 241)
 Main.Style = Enum.FrameStyle.RobloxRound
 
-TextLabel.Parent = Main
-TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.BackgroundTransparency = 1.000
-TextLabel.Position = UDim2.new(-0.0166051667, 0, 0.135416672, 0)
-TextLabel.Size = UDim2.new(0, 542, 0, 50)
-TextLabel.Font = Enum.Font.SourceSans
-TextLabel.Text = "Scuba Diving At Quill Lake"
-TextLabel.TextColor3 = Color3.fromRGB(24, 134, 217)
-TextLabel.TextSize = 40.000
-TextLabel.TextStrokeTransparency = 0.700
-TextLabel.TextWrapped = true
+Title.Name = "Title"
+Title.Parent = Main
+Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Title.BackgroundTransparency = 1.000
+Title.Position = UDim2.new(-0.0166051667, 0, 0.135416672, 0)
+Title.Size = UDim2.new(0, 542, 0, 50)
+Title.Font = Enum.Font.SourceSans
+Title.Text = "Scuba Diving At Quill Lake"
+Title.TextColor3 = Color3.fromRGB(24, 134, 217)
+Title.TextSize = 40.000
+Title.TextStrokeTransparency = 0.700
+Title.TextWrapped = true
 
 Coins.Name = "Coins"
 Coins.Parent = Main
@@ -86,7 +88,6 @@ CoinBox.PlaceholderColor3 = Color3.fromRGB(48, 25, 221)
 CoinBox.PlaceholderText = "Enter the amount of coins you want here."
 CoinBox.Text = ""
 CoinBox.TextColor3 = Color3.fromRGB(0, 0, 0)
-CoinBox.TextScaled = true
 CoinBox.TextSize = 14.000
 CoinBox.TextWrapped = true
 
@@ -100,7 +101,6 @@ GoldBox.PlaceholderColor3 = Color3.fromRGB(48, 25, 221)
 GoldBox.PlaceholderText = "Enter the amount of Gold you want here."
 GoldBox.Text = ""
 GoldBox.TextColor3 = Color3.fromRGB(0, 0, 0)
-GoldBox.TextScaled = true
 GoldBox.TextSize = 14.000
 GoldBox.TextWrapped = true
 
@@ -119,7 +119,7 @@ Credits.Name = "Credits"
 Credits.Parent = Main
 Credits.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Credits.BackgroundTransparency = 1.000
-Credits.Position = UDim2.new(0.837570369, 0, 0.810178995, 0)
+Credits.Position = UDim2.new(-0.00560307503, 0, -0.0279952884, 0)
 Credits.Size = UDim2.new(0, 92, 0, 50)
 Credits.Font = Enum.Font.SourceSans
 Credits.Text = "Made by huns#0001 xx"
@@ -128,8 +128,19 @@ Credits.TextScaled = true
 Credits.TextSize = 14.000
 Credits.TextWrapped = true
 
+out.Name = "out"
+out.Parent = Main
+out.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+out.Position = UDim2.new(0.39595297, 0, 0.775837123, 0)
+out.Size = UDim2.new(0, 317, 0, 50)
+out.Font = Enum.Font.SourceSans
+out.Text = ""
+out.TextColor3 = Color3.fromRGB(0, 0, 0)
+out.TextSize = 14.000
+
 OpenGUI.Name = "OpenGUI"
 OpenGUI.Parent = ScubaGUI
+OpenGUI.Active = true
 OpenGUI.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 OpenGUI.BackgroundTransparency = 1.000
 OpenGUI.Position = UDim2.new(-0.000454980094, 0, 0.443059415, 0)
@@ -138,7 +149,7 @@ OpenGUI.Size = UDim2.new(0, 99, 0, 40)
 Open.Name = "Open"
 Open.Parent = OpenGUI
 Open.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Open.Position = UDim2.new(18.424242, 0, -0.875, 0)
+Open.Position = UDim2.new(0.818181813, 0, 0.950000048, 0)
 Open.Size = UDim2.new(0, 99, 0, 45)
 Open.Style = Enum.ButtonStyle.RobloxRoundButton
 Open.Font = Enum.Font.SourceSans
@@ -148,18 +159,27 @@ Open.TextSize = 14.000
 
 -- Scripts:
 
-local function MLTO_fake_script() -- Coins.LocalScript 
+local function VNOG_fake_script() -- Coins.LocalScript 
 	local script = Instance.new('LocalScript', Coins)
 
 	script.Parent.MouseButton1Click:Connect(function()
 		local coinentered = tonumber(script.Parent.Parent["Coin Box"].Text)
-		game:GetService("ReplicatedStorage").Pay:FireServer(-coinentered, "Buy")
 		print("Coins Given")
+		if(coinentered > 100000) then
+			script.Parent.Parent.out.Text = "The value cannot be above 100,000. (game limit)"
+			wait(4)
+			script.Parent.Parent.out.Text = ""
+		else
+			game:GetService("ReplicatedStorage").Pay:FireServer(-coinentered, "Buy")
+			script.Parent.Parent.out.Text = "Coins set."
+			wait(4)
+			script.Parent.Parent.out.Text = ""
+		end
 	end)
 	
 end
-coroutine.wrap(MLTO_fake_script)()
-local function RMMGJ_fake_script() -- Tools.LocalScript 
+coroutine.wrap(VNOG_fake_script)()
+local function JWJT_fake_script() -- Tools.LocalScript 
 	local script = Instance.new('LocalScript', Tools)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -169,23 +189,34 @@ local function RMMGJ_fake_script() -- Tools.LocalScript
 		Rep.GiveTool:FireServer("SeaScooter")
 		Rep.GiveTool:FireServer("ItemFinder")
 		Rep.GiveTool:FireServer("Compass")
-		print("Gear Successfully Given! THESE ITEMS ARE TEMPORARY.")
+		script.Parent.Parent.out.Text = "Gear Successfully Given! THESE ITEMS ARE TEMPORARY."
+		wait(4)
+		script.Parent.Parent.out.Text = ""
 	end)
 end
-coroutine.wrap(RMMGJ_fake_script)()
-local function CZIE_fake_script() -- Gold.LocalScript 
+coroutine.wrap(JWJT_fake_script)()
+local function EAKV_fake_script() -- Gold.LocalScript 
 	local script = Instance.new('LocalScript', Gold)
 
 	script.Parent.MouseButton1Click:Connect(function()
 		local GoldCoins = game:GetService("Players").LocalPlayer:WaitForChild("GoldCoins")
 		local Goldy = tonumber(script.Parent.Parent["Gold Box"].Text)
 		--
-		game:GetService("ReplicatedStorage").ChangeValue:FireServer(GoldCoins, Goldy)
-		print("Gold Given")
+		if(Goldy > 10000) then
+			script.Parent.Parent.out.Text = "The value cannot be above 10,000. (game limit)"
+			wait(4)
+			script.Parent.Parent.out.Text = ""
+		else
+			game:GetService("ReplicatedStorage").ChangeValue:FireServer(GoldCoins, Goldy)
+			script.Parent.Parent.out.Text = "Gold Given."
+			wait(4)
+			script.Parent.Parent.out.Text = ""
+		end
+	
 	end)
 end
-coroutine.wrap(CZIE_fake_script)()
-local function TVCKPVJ_fake_script() -- Hide.LocalScript 
+coroutine.wrap(EAKV_fake_script)()
+local function KHGOVJ_fake_script() -- Hide.LocalScript 
 	local script = Instance.new('LocalScript', Hide)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -193,8 +224,8 @@ local function TVCKPVJ_fake_script() -- Hide.LocalScript
 		script.Parent.Parent.Parent.OpenGUI.Open.Visible = true
 	end)
 end
-coroutine.wrap(TVCKPVJ_fake_script)()
-local function QXRZBW_fake_script() -- Main.LocalScript 
+coroutine.wrap(KHGOVJ_fake_script)()
+local function WUSEP_fake_script() -- Main.LocalScript 
 	local script = Instance.new('LocalScript', Main)
 
 	-- Credit to Tiffblocks for this.
@@ -240,8 +271,8 @@ local function QXRZBW_fake_script() -- Main.LocalScript
 		end
 	end)
 end
-coroutine.wrap(QXRZBW_fake_script)()
-local function GIPQ_fake_script() -- Open.LocalScript 
+coroutine.wrap(WUSEP_fake_script)()
+local function PDFXY_fake_script() -- Open.LocalScript 
 	local script = Instance.new('LocalScript', Open)
 
 	script.Parent.MouseButton1Click:Connect(function()
@@ -250,4 +281,4 @@ local function GIPQ_fake_script() -- Open.LocalScript
 		script.Parent.Visible=false
 	end)
 end
-coroutine.wrap(GIPQ_fake_script)()
+coroutine.wrap(PDFXY_fake_script)()
